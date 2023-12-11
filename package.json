@@ -1,0 +1,101 @@
+{
+  "name": "eremit-vscode",
+  "displayName": "Eremit",
+  "publisher": "BuboBubo",
+  "description": "Extension for Eremit",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "images/eremit_logo.jpeg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bubobubobubobubo/eremit-vscode"
+  },
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "eremit.start",
+        "title": "Eremit: Start"
+      },
+      {
+        "command": "eremit.silence",
+        "title": "Eremit: Silence"
+      },
+      {
+        "command": "eremit.stop",
+        "title": "Eremit: Stop"
+      },
+      {
+        "command": "eremit.send",
+        "title": "Eremit: Send"
+      },
+      {
+        "command": "eremit.sendSelections",
+        "title": "Eremit: Send Selection"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "cmd+enter",
+        "command": "eremit.send",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "cmd+escape",
+        "command": "eremit.panic",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "shift+cmd+backspace",
+        "command": "eremit.silence",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Eremit",
+        "properties": {
+          "eremit.eremitPath": {
+            "type": "string",
+            "default": null,
+            "description": "Path where Eremit is currently installed (mandatory)"
+          },
+          "eremit.feedbackStyle": {
+            "type": "string",
+            "default": "outputChannel",
+            "enum": [
+              "outputChannel",
+              "infomationMessage"
+            ],
+            "enumDescriptions": [
+              "Use output channel to feedback Eremit output",
+              "Use infomation message to feedback Eremit output"
+            ],
+            "description": "Feedback style of Eremit output"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.1.0",
+    "@types/vscode": "1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.40.0",
+    "typescript": "5.0.4",
+    "vscode-test": "1.6.1"
+  }
+}
