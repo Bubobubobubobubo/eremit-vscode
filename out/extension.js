@@ -14,7 +14,6 @@ const vscode = require("vscode");
 const findEremit_1 = require("./findEremit");
 const vscode_1 = require("vscode");
 const child_process_1 = require("child_process");
-const ansi_1 = require("./ansi");
 // Eremit CLI process
 let eremitProc;
 // Eremit Status bar
@@ -109,7 +108,7 @@ const start = (editor) => {
                 // Kill any process named "sardine" that is running
             }
             let config = vscode.workspace.getConfiguration("eremit");
-            vscode.languages.setTextDocumentLanguage(editor.document, "python");
+            vscode.languages.setTextDocumentLanguage(editor.document, "lua");
             feedbackStyle = config.get("feedbackStyle") || FeedbackStyle.outputChannel;
             let eremitPath = (0, findEremit_1.findEremit)();
             if (!eremitPath) {
@@ -118,7 +117,7 @@ const start = (editor) => {
                 return;
             }
             eremitProc = (0, child_process_1.spawn)(eremitPath, [], {
-                env: Object.assign(Object.assign({}, process.env), { PYTHONIOENCODING: "utf-8" }),
+                env: Object.assign({}, process.env),
             });
             let sardineProcID = eremitProc.pid;
             eremitProc.on("spawn", () => {
@@ -155,13 +154,13 @@ const printFeedback = (message) => {
      * @param message - The feedback message to be printed.
      * @param type - The type of the message ('stdout' or 'stderr').
      */
-    const strippedMessage = (0, ansi_1.stripAnsi)(message);
+    // const strippedMessage = stripAnsi(message);
     switch (feedbackStyle) {
         case FeedbackStyle.infomationMessage:
-            vscode.window.showInformationMessage(strippedMessage);
+            vscode.window.showInformationMessage(message);
             break;
         default:
-            eremitOutput.appendLine(strippedMessage);
+            eremitOutput.appendLine(message);
             break;
     }
 };

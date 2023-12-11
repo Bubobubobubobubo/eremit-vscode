@@ -8,7 +8,6 @@ import {
   OutputChannel,
 } from "vscode";
 import { spawn, ChildProcess, exec } from "child_process";
-import { stripAnsi } from "./ansi";
 import * as child_process from "child_process";
 
 // Eremit CLI process
@@ -122,7 +121,7 @@ const start = (editor: TextEditor): Promise<void> => {
       }
 
       let config = vscode.workspace.getConfiguration("eremit");
-      vscode.languages.setTextDocumentLanguage(editor.document, "python");
+      vscode.languages.setTextDocumentLanguage(editor.document, "lua");
       feedbackStyle = config.get("feedbackStyle") || FeedbackStyle.outputChannel;
       let eremitPath = findEremit();
       if (!eremitPath) {
@@ -136,7 +135,6 @@ const start = (editor: TextEditor): Promise<void> => {
       eremitProc = spawn(eremitPath, [], {
         env: {
           ...process.env,
-          PYTHONIOENCODING: "utf-8",
         },
       });
       let sardineProcID = eremitProc.pid;
@@ -182,14 +180,14 @@ const printFeedback = (message: string) => {
    * @param message - The feedback message to be printed.
    * @param type - The type of the message ('stdout' or 'stderr').
    */
-  const strippedMessage = stripAnsi(message);
+  // const strippedMessage = stripAnsi(message);
 
   switch (feedbackStyle) {
     case FeedbackStyle.infomationMessage:
-      vscode.window.showInformationMessage(strippedMessage);
+      vscode.window.showInformationMessage(message);
       break;
     default:
-      eremitOutput.appendLine(strippedMessage);
+      eremitOutput.appendLine(message);
       break;
   }
 };
