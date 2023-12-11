@@ -35,7 +35,7 @@ const findEremit = () => {
             }
         }
         catch (error) {
-            if (exports.appendEremitPath)
+            if (eremitPath)
                 return (0, exports.appendEremitPath)(eremitPath);
         }
     }

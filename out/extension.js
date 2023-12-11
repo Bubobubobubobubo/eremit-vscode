@@ -42,7 +42,6 @@ function activate(context) {
         ["eremit.panic", panic],
         ["eremit.sendSelections", sendSelections],
         ["eremit.stop", stop],
-        ["eremit.help", help],
     ]);
     for (const [key, func] of commands)
         context.subscriptions.push(vscode.commands.registerTextEditorCommand(key, func));

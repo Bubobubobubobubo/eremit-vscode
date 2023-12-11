@@ -43,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
     ["eremit.panic", panic],
     ["eremit.sendSelections", sendSelections],
     ["eremit.stop", stop],
-    ["eremit.help", help],
   ]);
 
   for (const [key, func] of commands)

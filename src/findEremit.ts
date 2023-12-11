@@ -35,7 +35,7 @@ export const findEremit = (): string | undefined => {
         return whichEremit;
       }
     } catch (error) {
-      if (appendEremitPath) return appendEremitPath(eremitPath);
+      if (eremitPath) return appendEremitPath(eremitPath);
     }
   }
   vscode.window.showErrorMessage(
