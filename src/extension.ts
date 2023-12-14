@@ -59,21 +59,21 @@ export function deactivate() {
 
 const silence = () => {
   /**
-   * Writes "silence()" to the standard input of the sardineProc.
+   * Writes "silence()" to the standard input of the eremitProc.
    */
-  eremitProc.stdin!.write("silence()\n\n");
+  eremitProc.stdin!.write("silence()");
 };
 
 const panic = () => {
   /**
-   * Writes "panic()" to the standard input of the sardineProc.
+   * Writes "panic()" to the standard input of the eremitProc.
    */
-  eremitProc.stdin!.write("panic()\n\n");
+  eremitProc.stdin!.write("panic()");
 };
 
 const setupStatus = () => {
   /**
-   * Sets up the status bar item for the Sardine plugin.
+   * Sets up the status bar item for the Eremit plugin.
    */
   eremitStatus = vscode.window.createStatusBarItem(
     StatusBarAlignment.Left,
@@ -117,7 +117,7 @@ const start = (editor: TextEditor): Promise<void> => {
     try {
       if (eremitProc && !eremitProc.killed) {
         eremitProc.kill();
-        // Kill any process named "sardine" that is running
+        // Kill any process named "eremit" that is running
       }
 
       let config = vscode.workspace.getConfiguration("eremit");
@@ -137,10 +137,10 @@ const start = (editor: TextEditor): Promise<void> => {
           ...process.env,
         },
       });
-      let sardineProcID = eremitProc.pid;
+      let eremitProcID  = eremitProc.pid;
 
       eremitProc.on("spawn", () => {
-        console.log("Sardine process started.");
+        console.log("Eremit  process started.");
       });
 
       eremitProc.on("exit", (code) => {
@@ -166,7 +166,7 @@ const start = (editor: TextEditor): Promise<void> => {
       setupStatus();
       setupOutput();
       vscode.window.showInformationMessage(
-        `Sardine has started with: ${eremitPath}`
+        `Eremit has started with: ${eremitPath}`
       );
     } catch (error) {
       reject(error);
@@ -194,19 +194,19 @@ const printFeedback = (message: string) => {
 
 const handleOnClose = (code: number) => {
   /**
-   * Handles the onClose event of the Sardine plugin.
-   * @param code The exit code of Sardine.
+   * Handles the onClose event of the Eremit plugin.
+   * @param code The exit code of Eremit.
    */
   if (code !== 0) {
-    vscode.window.showErrorMessage(`Sardine has exited: ${code}.`);
+    vscode.window.showErrorMessage(`Eremit has exited: ${code}.`);
   } else {
-    vscode.window.showInformationMessage(`Sardine has stopped.`);
+    vscode.window.showInformationMessage(`Eremit has stopped.`);
   }
   eremitStatus?.dispose();
 };
 
 const stop = () => {
-  // Kill the Sardine process
+  // Kill the Eremit process
   if (eremitProc && !eremitProc.killed) {
     eremitProc.kill();
   }
@@ -269,11 +269,11 @@ const sendSelections = async (editor: TextEditor) => {
     let t = editor.document.getText(s);
     try {
       if (!eremitProc || !eremitProc.stdin) {
-        throw new Error("Sardine process is not running.");
+        throw new Error("Eremit process is not running.");
       }
 
-      printFeedback(">>> " + t);
-      eremitProc.stdin?.write(t + "\n\n");
+      printFeedback("Selection is: " + t);
+      eremitProc.stdin?.write(t + "\n");
 
       editor.selections = editor.selections.map(
         (s) => new Selection(s.active, s.active)

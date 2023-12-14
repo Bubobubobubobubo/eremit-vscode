@@ -57,13 +57,13 @@ const silence = () => {
     /**
      * Writes "silence()" to the standard input of the sardineProc.
      */
-    eremitProc.stdin.write("silence()\n\n");
+    eremitProc.stdin.write("silence()");
 };
 const panic = () => {
     /**
      * Writes "panic()" to the standard input of the sardineProc.
      */
-    eremitProc.stdin.write("panic()\n\n");
+    eremitProc.stdin.write("panic()");
 };
 const setupStatus = () => {
     /**
@@ -238,8 +238,8 @@ const sendSelections = (editor) => __awaiter(void 0, void 0, void 0, function* (
             if (!eremitProc || !eremitProc.stdin) {
                 throw new Error("Sardine process is not running.");
             }
-            printFeedback(">>> " + t);
-            (_a = eremitProc.stdin) === null || _a === void 0 ? void 0 : _a.write(t + "\n\n");
+            printFeedback("Selection is: " + t);
+            (_a = eremitProc.stdin) === null || _a === void 0 ? void 0 : _a.write(t + "\n");
             editor.selections = editor.selections.map((s) => new vscode_1.Selection(s.active, s.active));
         }
         catch (error) {
